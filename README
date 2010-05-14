@@ -1,5 +1,5 @@
 Please see http://jeffreysambells.com/iphone-os-static-library-template/ for more instructions on the project layout.
 
-This is an implementation of the UITextInput and related classes in iPhone OS 3.2. I've been working got replicate the Apple inputs as much as possible.
+This is an implementation of the UITextInput and related classes in iPhone OS 3.2. I've been working on replicating the Apple inputs as much as possible.
 
 If you're interested in the classes, you may also want to check out the OmniGroup OmniUI project (http://github.com/omnigroup/OmniGroup/tree/master/Frameworks/OmniUI/iPad/) which has other implementation as well.
