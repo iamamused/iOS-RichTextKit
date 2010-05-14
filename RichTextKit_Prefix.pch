@@ -1,0 +1,11 @@
+//
+// Prefix header for all source files of the 'RichTextKit' target in the 'RichTextKit' project
+//  RichTextKit
+//
+//  Created by Jeffrey Sambells on 10-05-07.
+//  Copyright 2010 TropicalPixels. All rights reserved.
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif
