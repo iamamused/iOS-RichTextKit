@@ -30,27 +30,15 @@
 
 @implementation DemoAppDelegate
 
-@synthesize window;
-@synthesize viewController;
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-    // Override point for customization after app launch    
-	
-	// Add the split view controller's view to the window and display.
-   [window addSubview:viewController.view];
-   [window makeKeyAndVisible];
+    _window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    _window.backgroundColor = UIColor.whiteColor;
+    _window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[DemoViewController alloc] init]];
+    [_window makeKeyAndVisible];
 	
 	return YES;
 }
-
-
-- (void)dealloc {
-    [viewController release];
-    [window release];
-    [super dealloc];
-}
-
 
 @end

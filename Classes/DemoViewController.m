@@ -50,9 +50,9 @@
 											  &kCFTypeDictionaryValueCallBacks
 											  );
 	
-	NSMutableAttributedString *string = [[[NSMutableAttributedString alloc] 
+	NSMutableAttributedString *string = [[NSMutableAttributedString alloc]
 			 initWithString:@"Lorem Ipsum\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae turpis urna, aliquam rutrum libero. Quisque justo odio, iaculis non luctus sit amet, bibendum a dolor. Fusce dolor mauris, tempus eget eleifend id, facilisis quis urna. Fusce iaculis congue sem, nec ullamcorper mi rutrum vitae. Proin molestie pellentesque imperdiet. Sed dictum nulla vitae arcu vulputate aliquet. Etiam at rutrum neque. Nam volutpat mollis lacinia. Suspendisse quis tellus massa. Nullam in iaculis metus. Nam dolor turpis, congue luctus fringilla et, congue a urna. Aliquam erat volutpat. Quisque ornare, augue sed mattis vulputate, orci diam varius urna, ut scelerisque lacus urna vitae urna. Cras dictum tempor egestas. Duis eu nibh a diam feugiat dapibus. Sed et libero turpis, in fermentum leo. Etiam vel augue odio, vitae porttitor enim."
-			 attributes:(NSDictionary *)attr] autorelease];
+                                         attributes:(__bridge NSDictionary *)attr];
 
 	CFRelease(attr);
 
@@ -69,7 +69,7 @@
 		titleColour
 	);
 	
-	CFAttributedStringSetAttribute((CFMutableAttributedStringRef)string, CFRangeMake(0, 5), kCTStrokeWidthAttributeName, [NSNumber numberWithFloat:2]);
+    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)string, CFRangeMake(0, 5), kCTStrokeWidthAttributeName, (__bridge CFTypeRef)([NSNumber numberWithFloat:2]));
 	CFAttributedStringSetAttribute((CFMutableAttributedStringRef)string, CFRangeMake(0, 5), kCTStrokeColorAttributeName, [UIColor blueColor].CGColor);
 
 	NSLog(@"%@", string);
@@ -85,14 +85,12 @@
 #pragma mark View Management
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-	UIScreen *screen = [UIScreen mainScreen];
-	// Load your primary view here for the demo
-	self.view = [[RTKView alloc] initWithFrame:[screen applicationFrame] delegate:self];
-}
+- (void)viewDidLoad {
+    [super viewDidLoad];
 
-- (void)dealloc {
-    [super dealloc];
+    RTKView *textView = [[RTKView alloc] initWithFrame:self.view.bounds delegate:self];
+    textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:textView];
 }
 
 @end
