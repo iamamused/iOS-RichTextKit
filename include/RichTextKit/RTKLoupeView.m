@@ -72,16 +72,6 @@
 	}
 }
 
-
-- (void)dealloc {
-	[_cache release];
-	[_mask release];
-	[_loop release];
-	[magnifyView release];
-	[super dealloc];
-}
-
-
 - (void)drawRect:(CGRect)rect {
 	
 	/*

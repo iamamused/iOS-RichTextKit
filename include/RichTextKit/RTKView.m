@@ -56,15 +56,7 @@
 	return self;
 }
 
-- (void)dealloc {
-	[docView release];
-	[super dealloc];
-}
-
-
 #pragma mark -
 #pragma mark Touch Events
-
-
 
 @end

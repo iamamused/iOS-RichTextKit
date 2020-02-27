@@ -93,29 +93,29 @@
 	if ((self = [super initWithFrame:frame])) {
 		
 		// Initialization code
-		_delegate = [delegate retain];
+		_delegate = delegate;
 		
 		// Set the background to white.
 		self.backgroundColor = [UIColor whiteColor];
 		
-		_lineCache = [[NSMutableArray array] retain];
+		_lineCache = [NSMutableArray array];
 		
 		// Add a caret Object
-		caret = [[[RTKCaret alloc] initWithFrame:CGRectZero] retain];
+		caret = [[RTKCaret alloc] initWithFrame:CGRectZero];
 		
 		// Add selection handles
-		selectionHandleStart = [[[RTKSelectionHandle alloc] initWithFrame:CGRectZero position:RTKSelectionHandlePostitionStart] retain];
-		selectionHandleEnd = [[[RTKSelectionHandle alloc] initWithFrame:CGRectZero position:RTKSelectionHandlePostitionEnd] retain];
+		selectionHandleStart = [[RTKSelectionHandle alloc] initWithFrame:CGRectZero position:RTKSelectionHandlePostitionStart];
+		selectionHandleEnd = [[RTKSelectionHandle alloc] initWithFrame:CGRectZero position:RTKSelectionHandlePostitionEnd];
 		
-		_selectionFirstLine = [[[UIView alloc] initWithFrame:CGRectZero] retain];
+		_selectionFirstLine = [[UIView alloc] initWithFrame:CGRectZero];
 		_selectionFirstLine.backgroundColor = [UIColor redColor];
 		_selectionFirstLine.alpha = 0.15;
 
-		_selectionLastLine = [[[UIView alloc] initWithFrame:CGRectZero] retain];
+		_selectionLastLine = [[UIView alloc] initWithFrame:CGRectZero];
 		_selectionLastLine.backgroundColor = [UIColor yellowColor];
 		_selectionLastLine.alpha = 0.15;
 
-		_selectionRange = [[[UIView alloc] initWithFrame:CGRectZero] retain];
+		_selectionRange = [[UIView alloc] initWithFrame:CGRectZero];
 		_selectionRange.backgroundColor = [UIColor blueColor];
 		_selectionRange.alpha = 0.15;
 				
@@ -144,15 +144,6 @@
 
 #pragma mark -
 #pragma mark Memory Management
-
-- (void)dealloc;
-{
-	[_lineCache release];
-	[selectionHandleStart release];
-	[selectionHandleEnd release];
-	[caret release];
-	[super dealloc];
-}
 
 
 #pragma mark -
@@ -383,8 +374,8 @@
 					// pos > end so select last character.
 					start = [RTKTextPosition positionWithInteger:[end position] - 1];
 				}
-				[_lastPosition release];
-				_lastPosition = [start retain];
+
+				_lastPosition = start;
 				break;
 			case RTKSelectionHandlePostitionEnd:
 				if ([self comparePosition:pos toPosition:start] == NSOrderedAscending) {
@@ -394,8 +385,8 @@
 					// pos > start
 					end = pos;
 				}
-				[_lastPosition release];
-				_lastPosition = [end retain];
+
+				_lastPosition = end;
 				break;
 		}
 		[self setSelectedTextRange:[RTKTextRange rangeWithStart:start end:end]];
@@ -417,8 +408,8 @@
 			// pos > end
 			end = pos;
 		}
-		[_lastPosition release];
-		_lastPosition = [pos retain];
+
+		_lastPosition = pos;
 		[self setSelectedTextRange:[RTKTextRange rangeWithStart:start end:end]];
 
 		[self _moveSelectionLoop:touches];
@@ -476,7 +467,7 @@
 		UIMenuController *menuCont = [UIMenuController sharedMenuController];
 		[menuCont setMenuVisible:NO animated:YES];
 		
-		_caretLoop = [[[RTKCaretLoupeView alloc] init] retain];
+		_caretLoop = [[RTKCaretLoupeView alloc] init];
 		[_caretLoop setMagnifyView:self];
 		CGPoint touchPointWin = [[touches anyObject] locationInView:[[UIApplication sharedApplication] keyWindow]];
 		[_caretLoop setCenter:CGPointMake(touchPointWin.x, touchPointWin.y - 65)];
@@ -506,7 +497,6 @@
 	if(_caretLoop != nil){
 		[caret setAnimated:YES];
 		[_caretLoop removeFromSuperview];
-		[_caretLoop release];
 		_caretLoop = nil;
 	}
 }
@@ -514,7 +504,7 @@
 - (void)_showSelectionLoop:(NSSet *)touches;
 {
 	if(_selectionLoop == nil){
-		_selectionLoop = [[[RTKSelectionLoupeView alloc] init] retain];
+		_selectionLoop = [[RTKSelectionLoupeView alloc] init];
 		[_selectionLoop setMagnifyView:self];
 		// TODO Fix it to the handle that is dragged
 		CGPoint touchPointWin = [[touches anyObject] locationInView:[[UIApplication sharedApplication] keyWindow]];
@@ -548,7 +538,6 @@
 {
 	if(_selectionLoop != nil){
 		[_selectionLoop removeFromSuperview];
-		[_selectionLoop release];
 		_selectionLoop = nil;
 	}
 }
@@ -648,10 +637,9 @@
 	}
 	if (word) {
 		[self setSelectedTextRange:word];	
-		
-		[_selectedWord release];
+
 		_selectedWord = nil;
-		_selectedWord = [word retain];
+		_selectedWord = word;
 	}
 }
 
@@ -758,7 +746,7 @@
 	CGPathAddRect(path, NULL, textBounds);
 	
 	// Get the string we'll be drawing.
-	CFMutableAttributedStringRef attrString = (CFMutableAttributedStringRef)self.textStore;
+    CFMutableAttributedStringRef attrString = (__bridge CFMutableAttributedStringRef)self.textStore;
 	
 	// Create a framesetter for it.
 	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(attrString);
@@ -1009,7 +997,6 @@
 		// There is no selection so append it to the end.
 		NSAttributedString *as = [[NSAttributedString alloc] initWithString:theText attributes:attr];
 		[self.textStore appendAttributedString:as];
-		[as release];
 		
 		UITextRange *newRange = [RTKTextRange 
 								 rangeWithStart:(RTKTextPosition *)[self endOfDocument] 
@@ -1027,7 +1014,6 @@
 		NSAttributedString *as = [[NSAttributedString alloc] initWithString:theText attributes:attr];
 		NSUInteger index = [(RTKTextPosition *)self.selectedTextRange.end position];
 		[self.textStore insertAttributedString:as atIndex:index];
-		[as release];
 		
 		// Place selection after the new text.
 		RTKTextPosition *pos = [RTKTextPosition positionWithInteger: index + [theText length]];
@@ -1133,7 +1119,7 @@
 	
 	[self.inputDelegate selectionWillChange:self];
 	
-	selectedTextRange = [[aSelectedTextRange copy] retain];
+	selectedTextRange = [aSelectedTextRange copy];
 	
 	[self.inputDelegate selectionDidChange:self];
 	
@@ -1424,7 +1410,7 @@
  {
 	 DebugLog(@"%@",[NSThread callStackSymbols]);
 	 if (tokenizer == nil) {
-		 tokenizer = [[[UITextInputStringTokenizer alloc] initWithTextInput:self] retain];
+		 tokenizer = [[UITextInputStringTokenizer alloc] initWithTextInput:self];
 	 }
 	 return tokenizer;
  }
@@ -1479,7 +1465,7 @@
 	int caretIndex = [(RTKTextPosition *)position position];
 	
 	NSAttributedString *subString = [textStore attributedSubstringFromRange:NSMakeRange([(RTKTextPosition *)[self beginningOfDocument] position], caretIndex)];
-	CFMutableAttributedStringRef attrString = (CFMutableAttributedStringRef)subString;
+    CFMutableAttributedStringRef attrString = (__bridge CFMutableAttributedStringRef)subString;
 	
 	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(attrString);
 	
@@ -1574,7 +1560,7 @@
 	CGMutablePathRef path = CGPathCreateMutable();
 	CGPathAddRect(path, NULL, textBounds);
 	
-	CFMutableAttributedStringRef attrString = (CFMutableAttributedStringRef)self.textStore;
+    CFMutableAttributedStringRef attrString = (__bridge CFMutableAttributedStringRef)self.textStore;
 	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(attrString);
 	CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), path, NULL);
 	
