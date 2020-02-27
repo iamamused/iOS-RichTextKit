@@ -83,7 +83,7 @@
 	 }
 	 */
 	
-	UIGraphicsBeginImageContext(self.magnifyView.bounds.size);
+	UIGraphicsBeginImageContextWithOptions(self.magnifyView.bounds.size, NO, 0);
 	[self.magnifyView.layer renderInContext:UIGraphicsGetCurrentContext()];
 	_cache = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
@@ -101,13 +101,19 @@
 										NULL, 
 										true);
 	// Copy a portion of the image around the touch point.
-	float scale = 2.0f;
+	CGFloat scale = 2.0;
 	CGRect box = CGRectMake(
-							touchPoint.x - ( ( _mask.size.width / scale ) / 2 ), 
-							touchPoint.y - ( ( _mask.size.height / scale ) / 2 ), 
+							touchPoint.x - ( ( _mask.size.width / scale ) / 2 ),
+							touchPoint.y - ( ( _mask.size.height / scale ) / 2 ),
 							( _mask.size.width / scale),
 							( _mask.size.height / scale )
 							);
+
+    CGFloat imageScale = _cache.scale;
+    box.origin.x *= imageScale;
+    box.origin.y *= imageScale;
+    box.size.width *= imageScale;
+    box.size.height *= imageScale;
 	
 	CGImageRef subImage = CGImageCreateWithImageInRect(imageRef, box);
 	
