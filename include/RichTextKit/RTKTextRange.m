@@ -34,7 +34,8 @@
 	RTKTextRange *e = [[RTKTextRange alloc] init];
 	[e setStartPostion:startPosition];
 	[e setEndPostion:endPosition];
-	return [e autorelease];
+
+	return e;
 }
 
 - (BOOL)isEmpty;
@@ -54,7 +55,7 @@
 
 - (void)setStartPostion:(RTKTextPosition *)position;
 {
-	_start = [position retain];
+	_start = position;
 }
 
 - (UITextPosition *)end;
@@ -64,7 +65,7 @@
 
 - (void)setEndPostion:(RTKTextPosition *)position;
 {
-	_end = [position retain];
+	_end = position;
 }
 
 #pragma mark -

@@ -36,7 +36,8 @@
 {
 	RTKTextPosition *e = [[RTKTextPosition alloc] init];
 	e.position = pos;
-	return [e autorelease];
+    
+	return e;
 }
 
 @end

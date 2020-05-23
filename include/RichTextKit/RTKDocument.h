@@ -65,7 +65,6 @@
 	UITextRange *selectedTextRange;
 //	UITextRange *markedTextRange;
 //	NSDictionary *markedTextStyle;
-	id <UITextInputDelegate> inputDelegate;
 	id <UITextInputTokenizer> tokenizer;
 	UIView *textInputView;
 	UITextStorageDirection selectionAffinity;

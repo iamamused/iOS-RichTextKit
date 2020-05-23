@@ -35,8 +35,8 @@
 	UIImage *mask = [UIImage imageNamed:@"RTKSelectionLoupeMask.png"];
 	if (self = [super initWithFrame:CGRectMake(0.0f, 0.0f, mask.size.width, mask.size.height)]) {
 		self.backgroundColor = [UIColor clearColor];
-		_mask = [mask retain];
-		_loop = [[UIImage imageNamed:@"RTKSelectionLoupe.png"] retain];
+		_mask = mask;
+		_loop = [UIImage imageNamed:@"RTKSelectionLoupe.png"];
 	}
 	return self;
 }

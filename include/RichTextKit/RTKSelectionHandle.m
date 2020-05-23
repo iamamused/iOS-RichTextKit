@@ -36,17 +36,12 @@
 		[self setBackgroundColor:[UIColor blueColor]];
 
 		_position = position;
-		_bull = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RTKSelectionHandle.png"]] retain];
+		_bull = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RTKSelectionHandle.png"]];
 		
 		[self addSubview:_bull];
 		
     }
     return self;
-}
-
-- (void)dealloc {
-	[_bull release];
-	[super dealloc];
 }
 
 -(void)setCaretRect:(CGRect)rect;

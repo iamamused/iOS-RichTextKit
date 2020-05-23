@@ -34,8 +34,8 @@
 	UIImage *mask = [UIImage imageNamed:@"RTKCaretLoupeMask.png"];
 	if (self = [super initWithFrame:CGRectMake(0.0f, 0.0f, mask.size.width, mask.size.height)]) {
 		self.backgroundColor = [UIColor clearColor];
-		_mask = [mask retain];
-		_loop = [[UIImage imageNamed:@"RTKCaretLoupe.png"] retain];
+		_mask = mask;
+		_loop = [UIImage imageNamed:@"RTKCaretLoupe.png"];
 	}
 	return self;
 }
